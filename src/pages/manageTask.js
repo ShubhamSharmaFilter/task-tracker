@@ -17,6 +17,7 @@ const ManageTask = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const token = getCookie("tttoken");
 
@@ -34,7 +35,7 @@ const ManageTask = () => {
     };
 
     fetchTask();
-  }, [id]);
+  }, [id, token]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,6 +56,27 @@ const ManageTask = () => {
       alert("Error updating task");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this task?"
+    );
+    if (!confirmDelete) return;
+
+    setDeleting(true);
+    try {
+      await axios.delete(`${apiurl}/api/tasks/${id}`, {
+        headers: { Authorization: `${token}` },
+      });
+      alert("Task deleted successfully");
+      navigate("/tasks");
+    } catch (err) {
+      console.error("Delete error:", err);
+      alert("Error deleting task");
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -100,13 +122,25 @@ const ManageTask = () => {
               onChange={handleChange}
               className="w-full p-2 border rounded"
             />
-            <button
-              type="submit"
-              disabled={loading}
-              className="bg-[#4B49AC] hover:bg-[#3c3c50] text-white px-4 py-2 rounded"
-            >
-              {loading ? "Updating..." : "Update Task"}
-            </button>
+
+            <div className="flex justify-between items-center gap-4 pt-4">
+              <button
+                type="submit"
+                disabled={loading || deleting}
+                className="bg-[#4B49AC] hover:bg-[#3c3c50] text-white px-4 py-2 rounded flex-1"
+              >
+                {loading ? "Updating..." : "Update Task"}
+              </button>
+
+              <button
+                type="button"
+                disabled={loading || deleting}
+                onClick={handleDelete}
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded flex-1"
+              >
+                {deleting ? "Deleting..." : "Delete Task"}
+              </button>
+            </div>
           </form>
         </div>
       </Container>
