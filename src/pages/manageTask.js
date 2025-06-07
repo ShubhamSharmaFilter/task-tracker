@@ -61,7 +61,7 @@ const ManageTask = () => {
   return (
     <Layout>
       <Container overflow="overflow-scroll">
-        <div className="max-w-xl mx-auto bg-white p-6 rounded shadow">
+        <div className="max-w-xl mx-auto bg-white mt-10 border p-6 rounded shadow">
           <h2 className="text-xl font-semibold mb-4">Update Task</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input

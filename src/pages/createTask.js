@@ -47,7 +47,7 @@ const CreateTask = () => {
   return (
     <Layout>
       <Container overflow="overflow-scroll">
-        <div className="max-w-xl mx-auto bg-white p-6 rounded shadow">
+        <div className="max-w-xl mx-auto my-auto  border mt-10 bg-white p-6 rounded shadow">
           <h2 className="text-xl font-semibold mb-4">Create New Task</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
