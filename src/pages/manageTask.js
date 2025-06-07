@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { apiurl } from "../config/config";
 import { getCookie } from "../config/webStorage";
+import { toast } from "react-toastify";
 
 const ManageTask = () => {
   const { id } = useParams();
@@ -49,7 +50,7 @@ const ManageTask = () => {
       await axios.put(`${apiurl}/api/tasks/${id}`, task, {
         headers: { Authorization: `${token}` },
       });
-      alert("Task updated successfully");
+      toast.success("Task updated successfully");
       navigate("/tasks");
     } catch (err) {
       console.error("Update error:", err);
@@ -70,7 +71,7 @@ const ManageTask = () => {
       await axios.delete(`${apiurl}/api/tasks/${id}`, {
         headers: { Authorization: `${token}` },
       });
-      alert("Task deleted successfully");
+      toast.success("Task deleted successfully");
       navigate("/tasks");
     } catch (err) {
       console.error("Delete error:", err);
